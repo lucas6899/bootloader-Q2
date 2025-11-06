@@ -1,2 +1,2 @@
 # Bootloader Q2
-This repo contains design and code for MCU A/B bootloader.
+This design enables firmware update for both MCU A and MCU B through the RS485 (Modbus) interface available on MCU A. MCU A works as a gateway and local bootloader, while MCU B is updated via a custom SPI bootloader protocol. The host only needs to speak Modbus. The bootloader command set includes ENTER_BL, GET_INFO, ERASE, WRITE_BLOCK, VERIFY, and RUN. For MCU B, these commands are encapsulated into SPI frames consisting of SOF, CMD, SEQ, ADDR, LEN, PAYLOAD, and CRC16. The data flow is: Host → MCU A (Modbus/RS485) → MCU B (SPI). MCU A acknowledges the host only after receiving the SPI response from MCU B, ensuring end-to-end reliability. 
